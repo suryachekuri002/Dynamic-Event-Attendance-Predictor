@@ -1,0 +1,632 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+
+
+/* Global Styles*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(135deg, #0a0f1c, #112534);
+    color: #e0f7fa;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* Navbar Styling */
+.bg-nav {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.15);
+    transition: all 0.4s ease;
+}
+
+.navbar-brand {
+    color: #00ffff !important;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+}
+
+.nav-link {
+    color: #e0f7fa !important;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #00ffff;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #00ffff !important;
+    text-shadow: 0 0 6px rgba(0, 255, 255, 0.6);
+}
+
+
+/* Navbar Toggler Animation */
+.navbar-toggler {
+    border: none;
+    background: transparent;
+    outline: none !important;
+    position: relative;
+    width: 32px;
+    height: 22px;
+    transition: all 0.4s ease;
+    box-shadow: none !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+.navbar-toggler span,
+.navbar-toggler::before,
+.navbar-toggler::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #00ffff;
+    border-radius: 10px;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+.navbar-toggler span {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar-toggler::before {
+    top: 0;
+}
+
+.navbar-toggler::after {
+    bottom: 0;
+}
+
+/*Hover Glow */
+.navbar-toggler:hover span,
+.navbar-toggler:hover::before,
+.navbar-toggler:hover::after {
+    background: #00e5ff;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.9);
+}
+
+/*When toggled  */
+.navbar-toggler.collapsed span {
+    opacity: 1;
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.navbar-toggler:not(.collapsed)::before {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.navbar-toggler:not(.collapsed)::after {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.navbar-toggler:not(.collapsed) span {
+    opacity: 0;
+}
+
+
+
+
+/* home page */
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.7)
+    ),
+    url("{{ url_for('static', filename='Assets/bg-event.jpg') }}")
+        center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #e0f7fa;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.1), transparent 70%);
+    animation: floatlight 12s infinite alternate;
+}
+
+@keyframes floatlight {
+    from { opacity: 0.5; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.05); }
+}
+
+.hero h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    text-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+    z-index: 1;
+    animation: fadeInDown 1.2s ease-in-out;
+}
+
+
+
+/* Get Started Button*/
+
+.btn-predict {
+    position: relative;
+    color: #00ffff !important;
+    border: 2px solid #00ffff !important;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+
+.btn-predict::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #00ffff, #00bcd4);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+}
+
+.btn-predict:hover::before {
+    opacity: 1;
+    animation: gradientMove 2s linear infinite;
+}
+
+.btn-predict:hover {
+    color: #000 !important;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7), 0 0 60px rgba(0, 255, 255, 0.3);
+}
+
+.btn-predict:active {
+    transform: scale(0.96);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+/* chart page */
+/*Predictor Section*/
+
+.predictor-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0b1722, #102a3b);
+    position: relative;
+    overflow: hidden;
+}
+
+.predictor-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(20px);
+}
+
+.form-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    border-radius: 25px;
+    padding: 3rem;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0, 255, 255, 0.2);
+    color: #e0f7fa;
+    animation: fadeIn 1.2s ease;
+    transition: all 0.4s ease;
+}
+
+.form-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 60px rgba(0, 255, 255, 0.3);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-card h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #00ffff;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+}
+
+
+
+
+/* home page*/
+/* Form Fields */
+
+label {
+    font-weight: 600;
+    color: #b2ebf2;
+}
+
+
+option{
+  /* background-color: #00e5ff; */
+    color: black;
+}
+
+.form-control,
+.form-select {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    color: rgb(253, 250, 250);
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+color: white;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: rgba(41, 217, 217, 0.08);
+    border-color: #00ffff;
+    color: #c9d8da;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    outline: none;
+}
+
+
+/* form button */
+/* Predict Button */
+
+button[type="submit"] {
+    margin-top: 1.5rem;
+    width: 100%;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #000;
+    background: linear-gradient(90deg, #00ffff, #00bcd4);
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 25px rgba(0, 255, 255, 0.4);
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(90deg, #00bcd4, #00ffff);
+    box-shadow: 0 12px 35px rgba(0, 255, 255, 0.5);
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .form-card {
+        padding: 2rem;
+    }
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    .btn-predict {
+        padding: 0.6rem 1.5rem;
+    }
+}
+
+
+
+/* for all pages */
+/* Footer */
+footer {
+    background: #212529;
+    color: #ccc;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+footer a {
+    color: #ffd43b;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+/*ABOUT PAGE */
+
+/* Section Base */
+.about {
+    margin-top: 5rem;
+    padding: 3rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    backdrop-filter: blur(25px);
+    color: #e0f7fa;
+    box-shadow: 0 10px 40px rgba(0, 255, 255, 0.15);
+    animation: fadeIn 1.2s ease-in-out;
+    transition: all 0.4s ease;
+}
+
+.about h4 {
+    text-align: center;
+    font-size: 2rem;
+    color: #00ffff;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+}
+
+/* Subsections */
+.about h3 {
+    color: #00ffff;
+    text-transform: capitalize;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    border-left: 4px solid #00ffff;
+    padding-left: 10px;
+    text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+}
+
+.about p {
+    color: #b2ebf2;
+    line-height: 1.8;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 2px solid rgba(0, 255, 255, 0.2);
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.about p:hover {
+    background: rgba(0, 255, 255, 0.05);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* Section containers spacing */
+.container-overview,
+.container-objective,
+.container-key-features {
+    margin-bottom: 2.5rem;
+}
+
+/*"lets go button*/
+.lets-go {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 4rem 0;
+}
+
+
+.lets-go {
+    color: #00ffff ;
+    border: 2px solid #00ffff !important;
+    padding: 0.8rem 2.5rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.4s ease;
+}
+
+.lets-go:hover{
+    background-color: #00ffff;
+    color: white;
+}
+
+
+.lets-go a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #00ffff, #00bcd4);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+}
+
+.lets-go a:hover::before {
+    opacity: 1;
+    animation: gradientMove 2s linear infinite;
+}
+
+.lets-go a:hover {
+    color: #000 !important;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+
+/*Footer*/
+footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(0, 255, 255, 0.2);
+    color: #b2ebf2;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 -5px 20px rgba(0, 255, 255, 0.1);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+/* Footer hover glow */
+footer:hover {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -5px 30px rgba(0, 255, 255, 0.2);
+    transition: all 0.4s ease;
+}
+
+/* Keyframe Reuse*/
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/*CONTACT PAGE*/
+
+/* Contact Section Base */
+section {
+    background: linear-gradient(135deg, #0a0f1c, #112534);
+    color: #e0f7fa;
+    min-height: 100vh;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    overflow: hidden;
+}
+
+/* Contact Form Card */
+.card {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(0, 255, 255, 0.25) !important;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 30px rgba(0, 255, 255, 0.2);
+    color: #e0f7fa;
+    transition: all 0.4s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 255, 255, 0.35);
+}
+
+/* Contact Form Heading */
+.card-body h3 {
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Input Fields */
+.form-control {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    color: #e0f7fa;
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #a0d6d6;
+}
+
+.form-control:focus {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+
+/* Contact Info Section */
+.text-primary {
+    color: white !important;
+}
+
+.text-muted {
+    color: white !important;
+}
+
+.bg-primary {
+    background: rgba(0, 255, 255, 0.15) !important; 
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+} */
+
+.bg-primary:hover { 
+    background: rgba(0, 255, 255, 0.3) !important; 
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); 
+}
+
+
+
+
+/*Bootstrap Icons*/
+.bi {
+    color: white;
+    transition: all 0.3s ease; 
+    font-size: 30px;
+}
+
+.bi:hover {
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+    transform: scale(1.1);
+}
+
+
+
+
+
+/*Responsive Design*/
+@media (max-width: 992px) {
+.card {
+    margin-bottom: 2rem;
+}
+section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+.card-body {
+    padding: 1.5rem !important;
+}
+.card-body h3 {
+    font-size: 1.5rem;
+}
+}
+
