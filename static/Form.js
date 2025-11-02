@@ -172,9 +172,9 @@ MonthDropdown.addEventListener('change', function () {
     } else if (['march', 'april', 'may'].includes(selectedMonth)) {
         seasonOptions = ['Summer'];
     } else if (['june', 'july', 'august','september'].includes(selectedMonth)) {
-        seasonOptions = ['Autumn'];
-    } else if ([ 'october', 'november'].includes(selectedMonth)) {
         seasonOptions = ['Rainy'];
+    } else if ([ 'october', 'november'].includes(selectedMonth)) {
+        seasonOptions = ['Autumn'];
     }
 
     // Clear previous season options
