@@ -18,7 +18,7 @@ model = joblib.load("models/rf_model.pkl")
 ohe = joblib.load("models/ohe_encoder.pkl")
 scaler = joblib.load("models/scaler.pkl")
 
-# --- Load dataset containing death_count and event_date ---'
+# Load dataset containing death_count and event_date
 try:
     df = pd.read_csv("Data/event_dataset.csv")
     # Ensure event_date parsed as datetime (coerce errors)
