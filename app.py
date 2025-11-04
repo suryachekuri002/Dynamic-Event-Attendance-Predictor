@@ -11,16 +11,14 @@ from sklearn.exceptions import InconsistentVersionWarning
 warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
 
 app = Flask(__name__)
-app.secret_key = "secret123"  # it is needed for flash messages
+app.secret_key = "secret123"
 
 # --- Load models / preprocessors ---
 model = joblib.load("models/rf_model.pkl")
 ohe = joblib.load("models/ohe_encoder.pkl")
 scaler = joblib.load("models/scaler.pkl")
 
-# --- Load dataset containing death_count and event_date ---
-# Make sure event_dataset.csv is in the same folder and has the columns:
-# 'venue_city', 'sub_event_type', 'death_count', 'event_date'
+# --- Load dataset containing death_count and event_date ---'
 try:
     df = pd.read_csv("Data/event_dataset.csv")
     # Ensure event_date parsed as datetime (coerce errors)
@@ -270,8 +268,6 @@ def result():
     min_deaths = int(float(request.args.get("min_deaths", 0)))
 
     # For recent incidents, we cannot pass complex list via query easily.
-    # Instead, recreate the filtered recent_incidents here using the same logic
-    # (This avoids URL-length problems). We'll reuse the same case-insensitive filter
     city_lower = event_data["city"].strip().lower()
     sub_event_lower = event_data["sub_event_type"].strip().lower()
 
