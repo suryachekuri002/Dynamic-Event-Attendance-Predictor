@@ -1,179 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
     <title>Predicted Attendance</title>
-    <!-- Chart.js CDN -->
+    <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='Assets/pie-graph.png') }}" type="image/x-icon">
 
     <style>
-    body {
-        font-family: "Plus Jakarta Sans", "Open Sans", sans-serif;
-        background: #0d1a23;
-        color: #e0f7fa;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        padding: 2rem 1rem;
-        box-sizing: border-box;
-    }
-
-    h2 {
-        color: #00ffff;
-        margin-bottom: 2rem;
-        text-align: center;
-        letter-spacing: 0.5px;
-        font-weight: 700;
-    }
-
-    /* Container */
-    .main-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 2rem;
-        width: 100%;
-        max-width: 1000px;
-    }
-
-    /* Chart Box */
-    .chart-container {
-        flex: 1 1 420px;
-        max-width: 420px;
-        aspect-ratio: 1 / 1;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 20px;
-        padding: 1.5rem;
-        border: 1px solid rgba(0, 255, 255, 0.2);
-    }
-
-    canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-
-    /* Event Details Box*/
-    .details-box {
-        flex: 1 1 350px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 16px;
-        padding: 1.5rem;
-        border: 1px solid rgba(0, 255, 255, 0.15);
-        color: #b2ebf2;
-        font-size: 0.95rem;
-        line-height: 1.6;
-    }
-
-    .details-box h3 {
-        color: #00ffff;
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: 600;
-    }
-
-    .details-box p {
-        margin: 0.3rem 0;
-    }
-
-/* Compact Info and Analysis Boxes */
-.info, .reason-box {
-    margin: 1.2rem auto 0 auto;
-    width: 60%;
-    max-width: 480px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
-    padding: 0.7rem 1rem;
-    border: 1px solid rgba(0, 255, 255, 0.15);
-    font-size: 0.88rem;
-    line-height: 1.4;
-    color: #b2ebf2;
-}
-
-.reason-box h3 {
-    color: #00ffff;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-/* for smaller screens */
-@media (max-width: 768px) {
-    .info, .reason-box {
-        width: 85%;
-        max-width: none;
-    }
-}
-
-
-    .btn {
-        margin-top: 2rem;
-        padding: 0.9rem 2rem;
-        color: #00ffff;
-        border: 2px solid #00ffff;
-        text-decoration: none;
-        border-radius: 30px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        letter-spacing: 0.3px;
-    }
-
-    .btn:hover {
-        background: #00ffff;
-        color: #000;
-    }
-
-    @media (max-width: 768px) {
-        .main-container {
+        body {
+            font-family: "Plus Jakarta Sans", "Open Sans", sans-serif;
+            background: #0d1a23;
+            color: #e0f7fa;
+            display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem 1rem;
+            box-sizing: border-box;
         }
-        .chart-container, .details-box {
-            max-width: 90%;
+
+        h2 {
+            color: #00ffff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            font-weight: 700;
         }
-    }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: nowrap;
+            gap: 2rem;
+            width: 100%;
+            max-width: 950px;
+            margin: 1rem auto;
+        }
+
+        /* Chart box */
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 0 1 320px;
+            max-width: 320px;
+            height: 320px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 18px;
+            padding: 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Event Type box above the chart */
+        .event-type-box {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 180, 180, 0.05));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 14px;
+            text-align: center;
+            width: 200px;
+            transition: all 0.3s ease;
+            padding: 0.8rem;
+        }
+
+        .event-type-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .event-type-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+
+        .event-type-box p:first-child {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #00ffff;
+            margin-bottom: 0.3rem;
+        }
+
+        .event-type-box p:last-child {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #b2ebf2;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+            text-transform: capitalize;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Event details beside chart */
+        .details-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 1.2rem;
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            color: #b2ebf2;
+            font-size: 14px;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.08);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .details-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 500px;
+        }
+
+        .details-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 18px rgba(0, 255, 255, 0.16);
+        }
+
+        .details-box h3 {
+            margin: 0 0 0.9rem 0;
+            text-align: center;
+            color: #00ffff;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .details-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 1.2rem;
+            row-gap: 0.45rem;
+            align-items: start;
+        }
+
+        .details-columns p {
+            margin: 0;
+            line-height: 2;
+            font-weight: 300;
+            color: #d6ffff;
+        }
+
+        .details-columns p strong {
+            color: #00ffff;
+            font-weight: 700;
+        }
+
+        .death-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            font-size: 0.9rem;
+            color: #b2ebf2;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .death-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 18px rgba(0, 255, 255, 0.15);
+        }
+
+        .death-box h3 {
+            color: #00ffff;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .death-box p strong {
+            color: #00ffff;
+            font-weight: 700;
+        }
+
+        .info {
+            margin: 1rem auto 0 auto;
+            text-align: center;
+            line-height: 25px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            font-size: 0.9rem;
+            color: #e0f7fa;
+            width: 300px;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info p {
+            margin: 0.2rem 0;
+            font-weight: 500;
+        }
+
+        .info p strong {
+            color: #00ffff;
+            font-weight: 700;
+        }
+
+        .reason-box {
+            margin: 1.5rem auto 0 auto;
+            width: 70%;
+            max-width: 600px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #b2ebf2;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.05);
+        }
+
+        .reason-box h3 {
+            color: #00ffff;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .btn {
+            margin-top: 2rem;
+            padding: 0.8rem 1.8rem;
+            color: #00ffff;
+            border: 2px solid #00ffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .btn:hover {
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        }
     </style>
 </head>
 
 <body>
     <h2>Predicted Attendance</h2>
 
-    <!-- chart -->
     <div class="main-container">
-        <!-- Pie Chart -->
-        <div class="chart-container">
-            <canvas id="attendanceChart"></canvas>
+        <!-- Left: Event Type -->
+        <div class="event-type-section">
+            <div class="event-type-box">
+                <p>{{ event_type }}</p>
+                <p>{{ sub_event_type }}</p>
+            </div>
         </div>
 
-        <!-- Event Details -->
-        <div class="details-box">
-            <h3>Event Details</h3>
-            <p><strong>Event Type:</strong> {{ event_type }}</p>
-            <p><strong>Sub-Event:</strong> {{ sub_event_type }}</p>
-            <p><strong>City:</strong> {{ city }}</p>
-            <p><strong>Season:</strong> {{ season }}</p>
-            <p><strong>Weather:</strong> {{ weather }}</p>
-            <p><strong>Day:</strong> {{ weekday }}</p>
-            <p><strong>Month:</strong> {{ month }}</p>
-            <p><strong>Ticket Price:</strong> ₹{{ ticket_price }}</p>
-            <p><strong>Avg Past Attendance:</strong> {{ avg_past_attendance }}</p>
+        <!-- Middle: Chart + Info -->
+        <div class="chart-section">
+            <div class="chart-container">
+                <canvas id="attendanceChart"></canvas>
+            </div>
+
+            <div class="info">
+                <p><strong>Total Capacity:</strong> {{ "%.0f"|format(capacity) }}</p>
+                <p><strong>Predicted Attendance:</strong> {{ "%.0f"|format(attendance) }}</p>
+            </div>
+        </div>
+
+        <!-- Right: Event Details + Safety -->
+        <div class="details-section">
+            <div class="details-box">
+                <h3>Event Details</h3>
+                <div class="details-columns">
+                    <div>
+                        <p><strong>Event:</strong> {{ event_type }}</p>
+                        <p><strong>City:</strong> {{ city }}</p>
+                        <p><strong>Season:</strong> {{ season }}</p>
+                        <p><strong>Weather:</strong> {{ weather }}</p>
+                    </div>
+                    <div>
+                        <p><strong>Day:</strong> {{ weekday }}</p>
+                        <p><strong>Month:</strong> {{ month }}</p>
+                        <p><strong>Ticket Price:</strong> ₹{{ ticket_price }}</p>
+                        <p><strong>Avg Past Attendance:</strong> {{ avg_past_attendance }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Death Statistics below Event Details -->
+            <div class="death-box">
+                <h3>Safety Insights</h3>
+                <p><strong>Severity Index:</strong> {{ avg_deaths }}</p>
+                <p> <strong>Overall Safety Level:</strong> {% if avg_deaths < 1 %} <span
+                        style="color:#00ff88; font-weight:600;">🟢 Low Risk</span> {% elif avg_deaths < 3 %} <span
+                            style="color:#ffd633; font-weight:600;">🟡 Moderate</span> {% else %} <span
+                                style="color:#ff4d4d; font-weight:600;">🔴 High Risk</span> {% endif %} </p>
+                <p style="font-size:0.9rem; color:#a8f0ff; margin-top:0.4rem;"> {% if avg_deaths < 1 %} Well-controlled
+                        event history — standard safety measures are sufficient. {% elif avg_deaths < 3 %} Consider
+                        extra volunteers and clear crowd-flow signage. {% else %} Enhanced safety planning advised —
+                        ensure medical and security teams are on standby. {% endif %} </p>
+            </div>
         </div>
     </div>
 
-    <!-- Info -->
-    <div class="info">
-        <p><strong>Total Capacity:</strong> {{ "%.0f"|format(capacity) }}</p>
-        <p><strong>Predicted Attendance:</strong> {{ "%.0f"|format(attendance) }}</p>
-    </div>
-
-    <!-- Analysis -->
     <div class="reason-box">
         <h3>Analysis</h3>
         <p id="reasonText">Loading insights...</p>
@@ -182,61 +325,68 @@
     <a href="{{ url_for('index') }}" class="btn">Predict Again</a>
 
     <script>
-    (() => {
-        const attendanceValue = parseFloat('{{ attendance }}');
-        const capacityValue = parseFloat('{{ capacity }}');
-        const ctx = document.getElementById('attendanceChart').getContext('2d');
+        (() => {
+            const attendanceValue = parseFloat('{{ attendance }}');
+            const capacityValue = parseFloat('{{ capacity }}');
 
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Predicted Attendance', 'Remaining Capacity'],
-                datasets: [{
-                    data: [attendanceValue, Math.max(0, capacityValue - attendanceValue)],
-                    backgroundColor: ['#00e5ff', '#11333f'],
-                    borderColor: '#0a1c26',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#b2ebf2', font: { size: 13 } }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => `${context.label}: ${context.parsed.toFixed(0)} people`
+            const ctx = document.getElementById('attendanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Predicted Attendance', 'Remaining Capacity'],
+                    datasets: [{
+                        data: [attendanceValue, Math.max(0, capacityValue - attendanceValue)],
+                        backgroundColor: ['#00e5ff', '#11333f'],
+                        borderColor: '#0a1c26',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#b2ebf2', font: { size: 12 } }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.label}: ${context.parsed.toFixed(0)} people`
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
 
-        const ratio = attendanceValue / capacityValue;
-        const reasonBox = document.getElementById("reasonText");
-        let reason = "";
 
-        if (ratio >= 0.95) {
-            reason = "Outstanding response! This event is nearly at full capacity — excellent marketing, timing, and audience relevance.";
-        } else if (ratio >= 0.9) {
-            reason = "Great turnout! The event seems highly attractive and well-suited for the audience.";
-        } else if (ratio >= 0.7) {
-            reason = "Good attendance, but you might boost turnout with better promotions, collaborations, or early-bird offers.";
-        } else if (ratio >= 0.5) {
-            reason = "Moderate interest. Possible reasons:<br>• Higher ticket prices<br>• Average past attendance<br>• Competing events nearby.";
-        } else if (ratio >= 0.3) {
-            reason = "Low attendance predicted. This might be due to:<br>• Unfavorable weather<br>• Non-holiday weekday<br>• Less popular event type.";
-        } else if (ratio >= 0.2) {
-            reason = "Poor audience response. Consider revising ticket prices, timing, or event location to improve participation.";
-        } else {
-            reason = "Very low turnout expected. Potential causes:<br>• Poor timing (weekday or off-season)<br>• High prices<br>• Unfavorable weather conditions<br>• Low audience engagement history.";
-        }
 
-        reasonBox.innerHTML = reason;
-    })();
+            // --- Dynamic Insights ---
+            const insights = [];
+            const eventType = '{{ event_type }}'.toLowerCase();
+            const weather = '{{ weather }}'.toLowerCase();
+            const season = '{{ season }}'.toLowerCase();
+            const weekday = '{{ weekday }}'.toLowerCase();
+            const ticketPrice = parseFloat('{{ ticket_price }}');
+            const avgPastAttendance = parseFloat('{{ avg_past_attendance }}');
+            const ratio = attendanceValue / capacityValue;
+
+            if (eventType.includes('concert')) insights.push("Concerts attract strong weekend and good-weather crowds.");
+            if (eventType.includes('sports')) insights.push("Sports events thrive in clear weather, especially on weekends.");
+            if (eventType.includes('political')) insights.push("Political events depend on timing and local interest.");
+            if (eventType.includes('tradition')) insights.push("Traditional events perform best in festive months.");
+
+            if (weather === 'rainy') insights.push("Rain may reduce turnout for outdoor events.");
+            if (season === 'summer') insights.push("Ensure shaded or indoor seating for comfort during summer events.");
+            if (weekday === 'saturday' || weekday === 'sunday') insights.push("Weekend timing will likely boost participation.");
+            if (ticketPrice > 1000) insights.push("High pricing may limit reach unless star appeal is strong.");
+            if (avgPastAttendance > capacityValue * 0.8) insights.push("Past events showed strong audience loyalty.");
+
+            if (ratio >= 0.9) insights.push("Excellent turnout expected — event nearing full capacity!");
+            else if (ratio >= 0.6) insights.push("Moderate turnout optimize last-minute promotions.");
+            else insights.push("Low turnout predicted consider marketing or timing changes.");
+
+            document.getElementById("reasonText").innerHTML = insights.join("<br><br>");
+        })();
     </script>
 </body>
+
 </html>

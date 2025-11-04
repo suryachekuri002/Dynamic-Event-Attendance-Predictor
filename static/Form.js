@@ -56,36 +56,36 @@
 
             if (eventValue === 'Political') {
                 options = [
-                    { value: 'rally', text: 'Rally' },
-                    { value: 'debate', text: 'Debate' }
+                    { value: 'Rally', text: 'Rally' },
+                    { value: 'Debate', text: 'Debate' }
                 ];
             } else if (eventValue === 'Concert') {
                 options = [
-                    { value: 'classical', text: 'Classical' },
-                    { value: 'rock', text: 'Rock' }
+                    { value: 'Classical', text: 'Classical' },
+                    { value: 'Rock', text: 'Rock' }
                 ];
-            } else if (eventValue === 'Fashionexhibition') {
+            } else if (eventValue === 'Fashion exhibition') {
                 options = [
-                    { value: 'men', text: 'Men' },
-                    { value: 'women', text: 'Women' }
+                    { value: 'Men', text: 'Men' },
+                    { value: 'Women', text: 'Women' }
                 ];
             } else if (eventValue === 'Prerelease') {
                 options = [
-                    { value: 'movie', text: 'Movie' },
-                    { value: 'webseries', text: 'Web Series' }
+                    { value: 'Movie', text: 'Movie' },
+                    { value: 'Webseries', text: 'Web Series' }
                 ];
             } else if (eventValue === 'Sports') {
                 options = [
-                    { value: 'cricket', text: 'Cricket' },
-                    { value: 'tennis', text: 'Tennis' },
-                    { value: 'football', text: 'Football' },
-                    { value: 'badminton', text: 'Badminton' },
-                    { value: 'basketball', text: 'Basketball' }
+                    { value: 'Cricket', text: 'Cricket' },
+                    { value: 'Tennis', text: 'Tennis' },
+                    { value: 'Football', text: 'Football' },
+                    { value: 'Badminton', text: 'Badminton' },
+                    { value: 'Basketball', text: 'Basketball' }
                 ];
-            } else if (eventValue === 'Traditionalevents') {
+            } else if (eventValue === 'Traditional events') {
                 options = [
-                    { value: 'dussehra', text: 'Dussehra' },
-                    { value: 'vinayaka chavithi', text: 'Vinayaka Chavithi' }
+                    { value: 'Dussehra', text: 'Dussehra' },
+                    { value: 'Vinayaka chavithi', text: 'Vinayaka Chavithi' }
                 ];
             }
 
@@ -140,7 +140,7 @@ createYesNoDropdown(isHolidayText, isHolidayInput);
 
 // Auto-updating Weekend and Holiday dropdowns based on selected day
 DayDropdown.addEventListener('change', function () {
-    const selectedDay = this.value.toLowerCase();
+    const selectedDay = this.value;
 
     // Auto setting Weekend
     if (selectedDay === 'Saturday' || selectedDay === 'Sunday') {
@@ -195,3 +195,8 @@ MonthDropdown.addEventListener('change', function () {
     });
 });
 
+
+
+
+
+        
