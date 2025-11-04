@@ -336,7 +336,6 @@
             <!-- Death Statistics below Event Details -->
             <div class="death-box">
                 <h3>Safety Insights</h3>
-                <p><strong>Safety Incidents Recorded:</strong> {{ incident_count }}</p>
                 <p><strong>Severity Index:</strong> {{ avg_deaths }}</p>
                 <p> <strong>Overall Safety Level:</strong> {% if avg_deaths < 1 %} <span
                         style="color:#00ff88; font-weight:600;">🟢 Low Risk</span> {% elif avg_deaths < 3 %} <span
