@@ -192,7 +192,7 @@ def predict():
 
         total_deaths = int(filtered_df['death_count'].sum())
         count_records = int(filtered_df.shape[0])
-        avg_deaths = float(filtered_df['death_count'].mean())
+        avg_deaths = round(int(filtered_df['death_count'].mean()))
         max_deaths = int(filtered_df['death_count'].max())
         min_deaths = int(filtered_df['death_count'].min())
 
@@ -241,6 +241,7 @@ def predict():
     ))
 
 
+
 @app.route('/result')
 def result():
     # Primary prediction values
@@ -263,7 +264,7 @@ def result():
     # Death stats
     total_deaths = int(float(request.args.get("total_deaths", 0)))
     count_records = int(float(request.args.get("count_records", 0)))
-    avg_deaths = float(request.args.get("avg_deaths", 0.0))
+    avg_deaths = int(request.args.get("avg_deaths", 0.0))
     max_deaths = int(float(request.args.get("max_deaths", 0)))
     min_deaths = int(float(request.args.get("min_deaths", 0)))
 

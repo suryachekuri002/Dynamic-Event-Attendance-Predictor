@@ -9,7 +9,7 @@
     <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='Assets/pie-graph.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Assets/pie-chart.png') }}" type="image/x-icon">
 
     <style>
         body {
@@ -21,17 +21,129 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2rem 1rem;
+            /* padding: 2rem 1rem; */
             box-sizing: border-box;
         }
 
-        h2 {
-            color: #00ffff;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            letter-spacing: 0.5px;
-            font-weight: 700;
+        /* === Navbar Styles === */
+        .navbar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            backdrop-filter: blur(8px);
+            animation: fadeInDown 1s ease-in-out;
         }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: #00ffff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 15px #00ffff;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #b2ebf2;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links li a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        /* === Responsive Navbar === */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: rgba(0, 20, 30, 0.95);
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 100%;
+                padding: 1rem 0;
+                text-align: center;
+                border-top: 1px solid rgba(0, 255, 255, 0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar::after {
+                content: "☰";
+                color: #00ffff;
+                font-size: 1.5rem;
+                position: absolute;
+                right: 20px;
+                top: 14px;
+                cursor: pointer;
+            }
+        }
+
+        /* Glow animation */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+     h2 {
+    color: #00e6e6;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+    font-size: 32px;
+    text-transform: uppercase;
+    margin-top: 3rem;
+    background: linear-gradient(90deg, #00e6e6, #00bfbf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+
+
 
         .main-container {
             display: flex;
@@ -44,32 +156,16 @@
             margin: 1rem auto;
         }
 
-        /* Chart box */
-        .chart-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 0 1 320px;
-            max-width: 320px;
-            height: 320px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 18px;
-            padding: 1rem;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
         /* Event Type box above the chart */
         .event-type-box {
             background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 180, 180, 0.05));
             border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 14px;
             text-align: center;
-            width: 250px;
+            width: 330px;
             transition: all 0.3s ease;
             padding: 0.8rem;
-            height: 470px;
+            height: 410px;
         }
 
         .event-type-section {
@@ -92,6 +188,7 @@
             text-transform: uppercase;
             color: #00ffff;
             margin-bottom: 0.3rem;
+            margin-top: 1rem;
         }
 
         .event-type-box p:last-child {
@@ -103,14 +200,83 @@
             text-transform: capitalize;
         }
 
+        .img-edit {
+            width: 100%;
+            max-width: 350px;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f7f7f7;
+            border: 2px solid #e3e3e3;
+        }
+
+        .img-edit img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .img-edit img:hover {
+            transform: scale(1.06);
+        }
+
+        /* Chart box */
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 0 1 320px;
+            width: 500px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 18px;
+            padding: 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
         .chart-container:hover {
             transform: translateY(-4px);
             box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
         }
 
+        .info {
+            margin: 1rem auto 0 auto;
+            height: 70px;
+            text-align: center;
+            line-height: 25px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            font-size: 0.9rem;
+            color: #e0f7fa;
+            width: 500px;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info p {
+            margin: 0.2rem 0;
+            font-weight: 500;
+        }
+
+        .info p strong {
+            color: #00ffff;
+            font-weight: 700;
+        }
+
         /* Event details beside chart */
         .details-box {
-            width: 100%;
+            width: 350px;
+            height: 180px;
             background: rgba(255, 255, 255, 0.04);
             border-radius: 12px;
             padding: 1.2rem;
@@ -162,7 +328,8 @@
         }
 
         .death-box {
-            width: 100%;
+            width: 350px;
+            height: 170px;
             background: rgba(255, 255, 255, 0.04);
             border-radius: 12px;
             padding: 1rem 1.2rem;
@@ -190,52 +357,51 @@
             font-weight: 700;
         }
 
-        .info {
-            margin: 1rem auto 0 auto;
-            text-align: center;
-            line-height: 25px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            font-size: 0.9rem;
-            color: #e0f7fa;
-            width: 300px;
-            box-shadow: 0 0 12px rgba(0, 255, 255, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* === Risk-based backgrounds === */
+        .low-risk {
+            background: linear-gradient(135deg, #00c853, #00e676);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
         }
 
-        .info p {
-            margin: 0.2rem 0;
-            font-weight: 500;
+        .moderate-risk {
+            background: linear-gradient(135deg, #e17108, #e17108);
+            box-shadow: 0 0 30px rgba(255, 152, 0, 0.6);
         }
 
-        .info p strong {
-            color: #00ffff;
-            font-weight: 700;
+        .high-risk {
+            background: linear-gradient(135deg, #d50000, #ff5252);
+            box-shadow: 0 0 35px rgba(255, 82, 82, 0.7);
         }
 
         .reason-box {
-            margin: 1.5rem auto 0 auto;
-            width: 70%;
-            max-width: 600px;
-            text-align: left;
+            margin: 0.25rem auto 0 auto;
+            margin-left: 5.5rem;
+            width: 1310px;
+            height: 200;
+            text-align: center;
             background: rgba(255, 255, 255, 0.06);
             border-radius: 12px;
             padding: 1rem 1.2rem;
             border: 1px solid rgba(0, 255, 255, 0.15);
             font-size: 0.9rem;
-            line-height: 1.6;
+            line-height: 1;
             color: #b2ebf2;
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.05);
+            /* margin-bottom: 0.5rem; */
+            margin: 0rem;
+        }
+
+        .reason {
+            font-size: 18px;
         }
 
         .reason-box h3 {
             color: #00ffff;
             font-weight: 600;
             margin-bottom: 0.6rem;
-            font-size: 1rem;
+            font-size: 20px;
             text-align: center;
+
         }
 
         .btn {
@@ -256,44 +422,52 @@
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
         }
 
-        .img-edit {
-            width: 100%;
-            max-width: 350px;
-            height: 350px;
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 20px auto;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f7f7f7;
-            border: 2px solid #e3e3e3;
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            width: 1500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            color: #b2ebf2;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 -5px 20px rgba(0, 255, 255, 0.1);
+            animation: fadeInUp 1s ease-in-out;
+            position: relative;
+            top: 2rem;
         }
 
-        .img-edit img {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            transition: transform 0.4s ease-in-out;
-        }
-
-        .img-edit img:hover {
-            transform: scale(1.06);
+        /* Footer hover glow */
+        footer:hover {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 -5px 30px rgba(0, 255, 255, 0.2);
+            transition: all 0.4s ease;
         }
     </style>
 </head>
 
 <body>
-    <h2>Predicted Attendance</h2>
+    <!-- Navbar Start -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/home" class="logo">DYNATT</a>
+            <ul class="nav-links">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/About">About</a></li>
+                <li><a href="/">Predictor</a></li>
+                <li><a href="/Contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+    <h2>Crowd Energy Report</h2>
 
     <div class="main-container">
         <!-- Left: Event Type -->
         <div class="event-type-section">
             <div class="event-type-box">
-                <p>{{ event_type }}</p>
-                <p>{{ sub_event_type }}</p>
-
+                <p style="font-size:1.4rem;"><strong style="font-size:1.08rem;"></strong>{{ event_type }}</p>
+                <p style="font-size:1.25rem; color:#a8f0ff;">{{ sub_event_type }}</p>
                 <div class="img-edit">
                     <img id="eventImg" src="{{ url_for('static', filename='images/classical.png') }}"
                         alt="Event Image" />
@@ -306,7 +480,6 @@
             <div class="chart-container">
                 <canvas id="attendanceChart"></canvas>
             </div>
-
             <div class="info">
                 <p><strong>Total Capacity:</strong> {{ "%.0f"|format(capacity) }}</p>
                 <p><strong>Predicted Attendance:</strong> {{ "%.0f"|format(attendance) }}</p>
@@ -333,63 +506,122 @@
                 </div>
             </div>
 
-            <!-- Death Statistics below Event Details -->
-            <div class="death-box">
+            <div class="death-box 
+                {% if avg_deaths < 1 %}low-risk
+                {% elif avg_deaths < 3 %}moderate-risk
+                {% else %}high-risk
+                {% endif %}">
                 <h3>Safety Insights</h3>
-                <p><strong>Severity Index:</strong> {{ avg_deaths }}</p>
-                <p> <strong>Overall Safety Level:</strong> {% if avg_deaths < 1 %} <span
-                        style="color:#00ff88; font-weight:600;">🟢 Low Risk</span> {% elif avg_deaths < 3 %} <span
-                            style="color:#ffd633; font-weight:600;">🟡 Moderate</span> {% else %} <span
-                                style="color:#ff4d4d; font-weight:600;">🔴 High Risk</span> {% endif %} </p>
-                <p style="font-size:0.9rem; color:#a8f0ff; margin-top:0.4rem;"> {% if avg_deaths < 1 %} Well-controlled
-                        event history — standard safety measures are sufficient. {% elif avg_deaths < 3 %} Consider
-                        extra volunteers and clear crowd-flow signage. {% else %} Enhanced safety planning advised —
-                        ensure medical and security teams are on standby. {% endif %} </p>
+                <p><strong>Mean Fatality Rate:</strong> {{ avg_deaths }}</p>
+                <p><strong>Overall Safety Level:</strong>
+                    {% if avg_deaths < 1 %} 🟢 Low Risk {% elif avg_deaths < 3 %} 🟠 Moderate {% else %} 🔴 High Risk {%
+                        endif %} </p>
+                        <p>
+                            {% if avg_deaths < 1 %} Well-controlled event history — standard safety measures are
+                                sufficient. {% elif avg_deaths < 3 %} Consider extra volunteers and clear crowd-flow
+                                signage. {% else %} Enhanced safety planning advised — ensure medical and security teams
+                                are on standby. {% endif %} </p>
             </div>
+
         </div>
     </div>
 
     <div class="reason-box">
         <h3>Analysis</h3>
-        <p id="reasonText">Loading insights...</p>
+        <p class="reason" id="reasonText">Loading insights...</p>
     </div>
 
     <a href="{{ url_for('index') }}" class="btn">Predict Again</a>
+    <footer>
+        <p>© 2025 DYNATT | Dynamic Event Attendance Predictor</p>
+    </footer>
 
     <script>
         (() => {
             const attendanceValue = parseFloat('{{ attendance }}');
             const capacityValue = parseFloat('{{ capacity }}');
+            const remainingValue = Math.max(0, capacityValue - attendanceValue);
 
             const ctx = document.getElementById('attendanceChart').getContext('2d');
+
+            // --- 3D Plugin for depth illusion ---
+            const pie3DPlugin = {
+                id: 'pie3d',
+                beforeDraw(chart) {
+                    const { ctx, chartArea } = chart;
+                    const meta = chart.getDatasetMeta(0);
+                    const dataset = chart.data.datasets[0];
+                    const centerX = (chartArea.left + chartArea.right) / 2;
+                    const centerY = (chartArea.top + chartArea.bottom) / 2;
+                    const radius = meta.data[0].outerRadius;
+
+                    ctx.save();
+                    ctx.translate(0, 10); // depth shadow offset
+
+                    meta.data.forEach((arc, i) => {
+                        const startAngle = arc.startAngle;
+                        const endAngle = arc.endAngle;
+                        for (let y = 10; y > 0; y--) {
+                            ctx.beginPath();
+                            ctx.arc(centerX, centerY + y, radius, startAngle, endAngle);
+                            ctx.lineTo(centerX, centerY + y);
+                            ctx.closePath();
+                            ctx.fillStyle = (i === 1)
+                                ? 'rgba(0, 255, 255,' + (0.04 * y) + ')'
+                                : 'rgba(0, 180, 200,' + (0.03 * y) + ')';
+                            ctx.fill();
+                        }
+                    });
+                    ctx.restore();
+                }
+            };
+
+            Chart.register(pie3DPlugin);
+
             new Chart(ctx, {
                 type: 'pie',
                 data: {
                     labels: ['Predicted Attendance', 'Remaining Capacity'],
                     datasets: [{
-                        data: [attendanceValue, Math.max(0, capacityValue - attendanceValue)],
-                        backgroundColor: ['#00e5ff', '#11333f'],
-                        borderColor: '#0a1c26',
-                        borderWidth: 1
+                        data: [attendanceValue, remainingValue],
+                        backgroundColor: ['#00eaff', '#0a3a4a'],
+                        borderColor: '#0d1a23',
+                        borderWidth: 2,
+                        hoverOffset: 30,
+                        offset: [0, 25]
                     }]
                 },
                 options: {
                     responsive: true,
+                    rotation: -30,
+                    layout: { padding: 10 },
                     plugins: {
                         legend: {
                             position: 'bottom',
-                            labels: { color: '#b2ebf2', font: { size: 12 } }
+                            labels: {
+                                color: '#b2ebf2',
+                                font: { size: 13 }
+                            }
                         },
                         tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            titleColor: '#00ffff',
+                            bodyColor: '#e0f7fa',
                             callbacks: {
-                                label: (context) => `${context.label}: ${context.parsed.toFixed(0)} people`
+                                label: (ctx) => `${ctx.label}: ${ctx.parsed.toFixed(0)} people`
                             }
                         }
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true,
+                        duration: 1200
                     }
-                }
+                },
+                plugins: ['pie3d']
             });
 
-            // --- Dynamic Insights ---
+            // --- Dynamic Insights (unchanged) ---
             const insights = [];
             const eventType = '{{ event_type }}'.toLowerCase();
             const subevent = '{{ sub_event_type }}'.toLowerCase();
@@ -404,7 +636,6 @@
             let imgSrc = "";
 
             if (subevent.includes('classical')) imgSrc = "{{ url_for('static', filename='images/classical.png') }}";
-            else if (subevent.includes('classical')) imgSrc = "{{ url_for('static', filename='images/Badminton.png') }}";
             else if (subevent.includes('rock')) imgSrc = "{{ url_for('static', filename='images/rock.png') }}";
             else if (subevent.includes('cricket')) imgSrc = "{{ url_for('static', filename='images/cricket.png') }}";
             else if (subevent.includes('tennis')) imgSrc = "{{ url_for('static', filename='images/tennis.png') }}";
@@ -422,23 +653,80 @@
 
             eventImg.setAttribute("src", imgSrc);
 
-            if (eventType.includes('concert')) insights.push("Concerts attract strong weekend and good-weather crowds.");
-            if (eventType.includes('sports')) insights.push("Sports events thrive in clear weather, especially on weekends.");
-            if (eventType.includes('political')) insights.push("Political events depend on timing and local interest.");
-            if (eventType.includes('tradition')) insights.push("Traditional events perform best in festive months.");
+            if (eventType.includes('concert')) 
+            insights.push("Concerts draw bigger evening and weekend crowds — weather and artist lineup heavily influence turnout.");
 
-            if (weather === 'rainy') insights.push("Rain may reduce turnout for outdoor events.");
-            if (season === 'summer') insights.push("Ensure shaded or indoor seating for comfort during summer events.");
-            if (weekday === 'saturday' || weekday === 'sunday') insights.push("Weekend timing will likely boost participation.");
-            if (ticketPrice > 1000) insights.push("High pricing may limit reach unless star appeal is strong.");
-            if (avgPastAttendance > capacityValue * 0.8) insights.push("Past events showed strong audience loyalty.");
+            if (eventType.includes('sports')) 
+                insights.push("Sports events peak on weekends with clear skies — crowd mood often mirrors team performance or rivalry intensity.");
 
-            if (ratio >= 0.9) insights.push("Excellent turnout expected — event nearing full capacity!");
-            else if (ratio >= 0.6) insights.push("Moderate turnout optimize last-minute promotions.");
-            else insights.push("Low turnout predicted consider marketing or timing changes.");
+            if (eventType.includes('political')) 
+                insights.push("Political events depend on timing, location sentiment, and local publicity — sudden turnout swings are common.");
+
+            if (eventType.includes('tradition')) 
+                insights.push("Traditional events thrive during festive months — strong community participation expected if well-promoted.");
+
+
+            // Weather & Seasonal Effects
+            if (weather === 'rainy') 
+                insights.push("Rain can cut attendance sharply for outdoor events — consider covered zones or digital streaming options.");
+
+            if (weather === 'sunny') 
+                insights.push("Sunny conditions favor open-air events — expect higher walk-in attendance if other conditions align.");
+
+            if (season === 'summer') 
+                insights.push("High temperatures may discourage long-duration outdoor events — ensure hydration and shaded areas.");
+
+            if (season === 'winter') 
+                insights.push("Cooler weather improves comfort but may limit evening attendance — schedule daytime slots where possible.");
+
+
+            // Timing & Ticketing
+            if (weekday === 'saturday' || weekday === 'sunday') 
+                insights.push("Weekend scheduling strongly boosts attendance — leverage family-friendly promotions.");
+
+            if (weekday === 'monday' || weekday === 'tuesday') 
+                insights.push("Early-week events typically see lower participation — online engagement campaigns recommended.");
+
+            if (ticketPrice > 1000) 
+                insights.push("High ticket prices narrow audience reach — emphasize premium experience or exclusive access to justify cost.");
+
+            if (ticketPrice < 300) 
+                insights.push("Affordable pricing can widen reach — consider upselling merchandise or VIP add-ons for revenue balance.");
+
+
+            // Historical Performance
+            if (avgPastAttendance > capacityValue * 0.8) 
+                insights.push("Strong historical attendance — audience loyalty likely to drive strong repeat turnout.");
+
+            if (avgPastAttendance < capacityValue * 0.5) 
+                insights.push("Past turnout below potential — consider venue suitability or local demographic targeting.");
+
+
+            // Predicted Ratio (AI-based Turnout Expectation)
+            if (ratio >= 0.9) 
+                insights.push("Projected near full house — maintain crowd control and ensure efficient entry management.");
+
+            else if (ratio >= 0.6) 
+                insights.push("Moderate turnout predicted — final week promotions or influencer marketing can push higher engagement.");
+
+            else 
+                insights.push("Low turnout expected — reassess marketing timing or offer group discounts to boost attendance.");
+
 
             document.getElementById("reasonText").innerHTML = insights.join("<br><br>");
+
+        // ✅ Convert insights into bullet points
+        if (insights.length > 0) {
+            const bulletList = "<ul style='text-align:left; display:inline-block; font-size:17px; line-height:1.8; list-style-type:disc; color:#b2ebf2;'>" +
+                insights.map(i => `<li>${i}</li>`).join("") +
+                "</ul>";
+            document.getElementById("reasonText").innerHTML = bulletList;
+        } else {
+            document.getElementById("reasonText").innerHTML = "No insights available.";
+        }
+
         })();
+        
     </script>
 </body>
 

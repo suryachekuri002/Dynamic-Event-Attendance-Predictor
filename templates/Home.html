@@ -7,7 +7,7 @@
     <!-- title -->
     <title>Event Attendance Predictor</title>
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='Assets/pie-graph.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Assets/pie-chart.png') }}" type="image/x-icon">
     <!-- Bootstrap_icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Bootstrap cdn -->
@@ -16,6 +16,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- external css link -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
 </head>
 
 <body>
@@ -46,25 +47,72 @@
         </div>
     </nav>
     <!-- navbar end -->
+<!-- Hero section start -->
+<header class="hero d-flex text-center justify-content-center align-items-center">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3" data-aos="fade-up">Welcome Event Organizers 👋</h1>
+        <h2 class="fw-semibold mb-3" data-aos="fade-up" data-aos-delay="100">Plan Smarter. Predict Better.</h2>
+        <p class="mb-4" data-aos="fade-up" data-aos-delay="200">
+            Use AI-powered attendance predictions to manage resources, reduce risk, and execute successful events with confidence.
+        </p>
+        <a href="/About" class="btn btn-outline btn-predict rounded-pill shadow fw-bold" id="getStarted" data-aos="zoom-in" data-aos-offset="250" data-aos-easing="ease-in">Know More</a>
+    </div>
+</header>
+<!-- Hero section end -->
 
-    <!-- Hero section start -->
-    <header class="hero d-flex text-center justify-content-center align-items-center">
-        <div class="container">
-            <h1 class="display-3 fw-bold mb-3" data-aos="zoom-in" data-aos-offset="200" data-aos-easing="ease-in">
-                Dynamic Event Attendance Predictor</h1>
-                    <h4 data-aos="zoom-in" data-aos-offset="200" data-aos-easing="ease-in">Smarter Predictions, Seamless Events</h4>
-                    <p class="mb-5" data-aos="zoom-in" data-aos-offset="200" data-aos-easing="ease-in">Transform your event planning with accurate attendance forecasting and real-time insights powered by intelligent data analysis.</p>
-            <a href="/About" class="btn btn-outline btn-predict rounded-pill shadow fw-bold" id="getStarted">Get Started</a>
+<!-- Quick Categories start -->
+<section class="py-6 bg-light" >
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-3" data-aos="fade-up" style="color: #a0d6d6;" id="estimate3" >Event Categories We Cover</h1>
+
+        <div class="row justify-content-center g-4">
+            <div class="col-6 col-md-3" data-aos="zoom-in">
+                <div class="card1 card p-3 hover-card shadow-sm">
+                    <i class="bi bi-music-note-beamed display-5 mb-2"></i>
+                    <h3>Concerts</h3>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                <div class="card1 card p-3 hover-card shadow-sm">
+                    <i class="bi bi-trophy display-5 mb-2"></i>
+                    <h3>Sports Events</h3>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                <div class="card1 card p-3 hover-card shadow-sm">
+                    <i class="bi bi-film display-5 mb-2"></i>
+                    <h3>Pre-Releases</h3>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                <div class="card1 card p-3 hover-card shadow-sm">
+                    <i class="bi bi-people display-5 mb-2"></i>
+                    <h3>Traditional Events</h3>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                <div class="card1 card p-3 hover-card shadow-sm">
+                    <i class="bi bi-people display-5 mb-2"></i>
+                    <h3>Fashion Shows</h3>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                <div class="card1 card p-3 hover-card shadow-sm">
+                    <i class="bi bi-people display-5 mb-2"></i>
+                    <h3>Political Events</h3>
+                </div>
+            </div>
         </div>
-    </header>
-    <!-- Hero section end -->
+    </div>
+</section>
+<!-- Quick Categories end -->
 
-    <!-- footer start -->
+
+     <!-- footer start -->
     <footer>
         <p>© 2025 DYNATT | Dynamic Event Attendance Predictor</p>
     </footer>
     <!-- footer end -->
-
 
 
 
